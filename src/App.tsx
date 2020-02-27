@@ -1,11 +1,20 @@
 import React from "react";
+import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
+
+import { apiBaseUrl } from "./constants";
 
 import PatientListPage from "./PatientListPage";
 import { reducer, StateProvider } from "./state";
 
 const App: React.FC = () => {
+  React.useEffect(() => {
+    axios.get<void>(
+      `${apiBaseUrl}/ping`
+    );
+  }, []);
+
   return (
     <StateProvider reducer={reducer}>
       <div className="App">
