@@ -1,15 +1,15 @@
-import React from 'react';
-import { Grid, Button } from 'semantic-ui-react';
-import { Formik, Form } from 'formik';
+import React from "react";
+import { Grid, Button } from "semantic-ui-react";
+import { Formik, Form } from "formik";
 
-import { TextField, SelectField, Option } from './FormField';
-import { Gender, Patient } from '../types';
+import { TextField, SelectField, Option } from "./FormField";
+import { Gender, Patient } from "../types";
 
 /*
  * use type Patient, but omit id and entries,
  * because those are irrelevant for new patient object.
  */
-export type FormValues = Omit<Patient, 'id' | 'entries'>;
+export type FormValues = Omit<Patient, "id" | "entries">;
 
 interface Props {
   onSubmit: (values: FormValues) => void;
@@ -17,20 +17,20 @@ interface Props {
 }
 
 const genderOptions: Option<Gender>[] = [
-  { value: Gender.Male, label: 'Male' },
-  { value: Gender.Female, label: 'Female' },
-  { value: Gender.Other, label: 'Other' },
+  { value: Gender.Male, label: "Male" },
+  { value: Gender.Female, label: "Female" },
+  { value: Gender.Other, label: "Other" }
 ];
 
 export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   return (
     <Formik
       initialValues={{
-        name: '',
-        ssn: '',
-        dateOfBirth: '',
-        occupation: '',
-        gender: Gender.Other,
+        name: "",
+        ssn: "",
+        dateOfBirth: "",
+        occupation: "",
+        gender: Gender.Other
       }}
       onSubmit={values => {
         onSubmit(values);
@@ -59,7 +59,7 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
           <SelectField<string>
             label="Gender"
             name="gender"
-            defaultValue=""
+            defaultValue="other"
             options={genderOptions}
           />
           <Grid>

@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <div className="App">
         <Router>
           <Container>
-            <Header as="h1">Patientonator</Header>
+            <Header as="h1">Patientor</Header>
             <Button as={Link} to="/" primary>
               Home
             </Button>

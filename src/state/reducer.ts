@@ -1,5 +1,15 @@
 import { State } from "./state";
-import { ReducerAction } from "./actions";
+import { Patient } from "../types";
+
+export type ReducerAction =
+  | {
+      type: "SET_PATIENT_LIST";
+      payload: Patient[];
+    }
+  | {
+      type: "ADD_PATIENT";
+      payload: Patient;
+    };
 
 export const reducer = (state: State, action: ReducerAction): State => {
   switch (action.type) {

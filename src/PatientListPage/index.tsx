@@ -7,7 +7,7 @@ import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
-import { setPatientList, addPatient, useStateValue } from "../state";
+import { useStateValue } from "../state";
 
 const PatientListPage: React.FC = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -27,7 +27,7 @@ const PatientListPage: React.FC = () => {
       `${apiBaseUrl}/patients`
     );
     // Use validation as an example in the materials
-    setPatientList(dispatch, patientListFromApi);
+    dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
   }, [dispatch]);
 
   React.useEffect(() => {
@@ -45,7 +45,7 @@ const PatientListPage: React.FC = () => {
         `${apiBaseUrl}/patients`,
         values
       );
-      addPatient(dispatch, newPatient);
+      dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
       console.error(e.response.data);
