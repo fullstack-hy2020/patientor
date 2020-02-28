@@ -40,7 +40,6 @@ const PatientListPage: React.FC = () => {
 
   const submitNewPatient = async (values: FormValues) => {
     try {
-      // TODO: Add local form validation before post
       const { data: newPatient } = await axios.post<Patient>(
         `${apiBaseUrl}/patients`,
         values

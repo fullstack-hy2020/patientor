@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Input, InputProps, Form } from 'semantic-ui-react';
+import { Input, InputProps, Form, Label } from 'semantic-ui-react';
 import { Gender } from '../types';
 
 // structure of a single option (generic - type of value is inferred from T)
@@ -41,13 +41,13 @@ const TextInput: React.FC<FieldProps & InputProps> = ({
   field,
 }) => <Input placeholder={placeholder} {...field} />;
 
-export const TextField: React.FC<InputProps & { label: string }> = ({
-  name,
-  label,
-  placeholder,
-}) => (
+export const TextField: React.FC<InputProps & {
+  label: string;
+  errorMessage?: boolean | string;
+}> = ({ name, label, placeholder, errorMessage }) => (
   <Form.Field>
     <label>{label}</label>
     <Field name={name} placeholder={placeholder} component={TextInput} />
+    {errorMessage && <Label color="red">{errorMessage}</Label>}
   </Form.Field>
 );

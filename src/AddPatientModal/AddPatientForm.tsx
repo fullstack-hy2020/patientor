@@ -33,26 +33,54 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         gender: Gender.Other
       }}
       onSubmit={onSubmit}
+      validate={values => {
+        const requiredError = 'Field is required';
+        const errors: { [field: string]: string } = {};
+        if (!values.name) {
+          errors.name = requiredError;
+        }
+        if (!values.ssn) {
+          errors.ssn = requiredError;
+        }
+        if (!values.ssn) {
+          errors.ssn = requiredError;
+        }
+        if (!values.dateOfBirth) {
+          errors.dateOfBirth = requiredError;
+        }
+        if (!values.occupation) {
+          errors.occupation = requiredError;
+        }
+        return errors;
+      }}
     >
-      {() => (
+      {({ errors, touched }) => (
         <Form className="form ui">
-          <TextField label="Name" name="name" placeholder="Name" />
+          <TextField
+            label="Name"
+            name="name"
+            placeholder="Name"
+            errorMessage={touched.name && errors.name}
+          />
           <TextField
             label="Social Security Number"
             name="ssn"
             placeholder="SSN"
             component={TextField}
+            errorMessage={touched.ssn && errors.ssn}
           />
           <TextField
             label="Date Of Birth"
             name="dateOfBirth"
             placeholder="YYYY-MM-DD"
             component={TextField}
+            errorMessage={touched.dateOfBirth && errors.dateOfBirth}
           />
           <TextField
             label="Occupation"
             name="occupation"
             placeholder="Occupation"
+            errorMessage={touched.occupation && errors.occupation}
           />
           <SelectField
             label="Gender"
