@@ -41,7 +41,7 @@ const TextInput: React.FC<FieldProps & InputProps> = ({
   field,
 }) => <Input placeholder={placeholder} {...field} />;
 
-export const TextField: React.FC<InputProps & { label?: string }> = ({
+export const TextField: React.FC<InputProps & { label: string }> = ({
   name,
   label,
   placeholder,
