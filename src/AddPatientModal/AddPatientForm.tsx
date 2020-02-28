@@ -32,9 +32,7 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         occupation: "",
         gender: Gender.Other
       }}
-      onSubmit={values => {
-        onSubmit(values);
-      }}
+      onSubmit={onSubmit}
     >
       {() => (
         <Form className="form ui">
