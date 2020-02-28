@@ -10,7 +10,7 @@ export type Option<T extends string> = {
 };
 
 // props for select field component
-interface SelectFieldProps<T extends string> {
+type SelectFieldProps<T extends string> = {
   name: string;
   label: string;
   options: Option<T>[]; // array of option generic type
