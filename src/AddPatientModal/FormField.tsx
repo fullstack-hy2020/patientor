@@ -3,26 +3,26 @@ import { Field, FieldProps } from 'formik';
 import { Input, InputProps, Form, Label } from 'semantic-ui-react';
 import { Gender } from '../types';
 
-// structure of a single option (generic - type of value is inferred from T)
-export type Option<T extends string> = {
-  value: T;
+// structure of a single option
+export type GenderOption = {
+  value: Gender;
   label: string;
 };
 
 // props for select field component
-type SelectFieldProps<T extends string> = {
+type SelectFieldProps = {
   name: string;
   label: string;
-  options: Option<T>[]; // array of option generic type
-  defaultValue?: T;
+  options: GenderOption[];
+  defaultValue?: Gender;
 }
 
-export const SelectField: React.FC<SelectFieldProps<Gender>> = ({
+export const SelectField: React.FC<SelectFieldProps> = ({
   name,
   label,
   options,
   defaultValue,
-}: SelectFieldProps<Gender>) => (
+}: SelectFieldProps) => (
   <Form.Field>
     <label>{label}</label>
     <Field as="select" name={name} className="ui dropdown">
@@ -43,7 +43,7 @@ const TextInput: React.FC<FieldProps & InputProps> = ({
 
 export const TextField: React.FC<InputProps & {
   label: string;
-  errorMessage?: boolean | string;
+  errorMessage?: string;
 }> = ({ name, label, placeholder, errorMessage }) => (
   <Form.Field>
     <label>{label}</label>
