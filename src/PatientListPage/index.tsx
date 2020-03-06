@@ -22,21 +22,19 @@ const PatientListPage: React.FC = () => {
     setError(undefined);
   };
 
-  const fetchPatientList = React.useCallback(async () => {
-    const { data: patientListFromApi } = await axios.get<Patient[]>(
-      `${apiBaseUrl}/patients`
-    );
-    // Use validation as an example in the materials
-    dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
-  }, [dispatch]);
-
   React.useEffect(() => {
     try {
+      const fetchPatientList = async () => {
+        const { data: patientListFromApi } = await axios.get<Patient[]>(
+          `${apiBaseUrl}/patients`
+        );
+        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+      };
       fetchPatientList();
     } catch (e) {
       console.error(e);
     }
-  }, [fetchPatientList]);
+  }, [dispatch]);
 
   const submitNewPatient = async (values: FormValues) => {
     try {
