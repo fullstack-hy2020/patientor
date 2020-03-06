@@ -20,6 +20,12 @@
       "no-case-declarations": 0,
       "react/prop-types": 0
     },
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+      }
+    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "project": "./tsconfig.json"
