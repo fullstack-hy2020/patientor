@@ -6,7 +6,6 @@ import { Button, Divider, Header, Container } from "semantic-ui-react";
 import { apiBaseUrl } from "./constants";
 
 import PatientListPage from "./PatientListPage";
-import { reducer, StateProvider } from "./state";
 
 const App: React.FC = () => {
   React.useEffect(() => {
@@ -16,20 +15,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <StateProvider reducer={reducer}>
-      <div className="App">
-        <Router>
-          <Container>
-            <Header as="h1">Patientor</Header>
-            <Button as={Link} to="/" primary>
-              Home
-            </Button>
-            <Divider hidden />
-            <Route exact path="/" render={() => <PatientListPage />} />
-          </Container>
-        </Router>
-      </div>
-    </StateProvider>
+    <div className="App">
+      <Router>
+        <Container>
+          <Header as="h1">Patientor</Header>
+          <Button as={Link} to="/" primary>
+            Home
+          </Button>
+          <Divider hidden />
+          <Route exact path="/" render={() => <PatientListPage />} />
+        </Container>
+      </Router>
+    </div>
   );
 };
 
