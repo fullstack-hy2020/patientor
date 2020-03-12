@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import { Input, InputProps, Form, Label } from 'semantic-ui-react';
+import { Input, InputProps, Form, Label, Segment, Button } from 'semantic-ui-react';
 import { Gender } from '../types';
 
 // structure of a single option
