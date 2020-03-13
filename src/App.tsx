@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 
 import { apiBaseUrl } from "./constants";
@@ -23,7 +23,9 @@ const App: React.FC = () => {
             Home
           </Button>
           <Divider hidden />
-          <Route exact path="/" render={() => <PatientListPage />} />
+          <Switch>
+            <Route path="/" render={() => <PatientListPage />} />
+          </Switch>
         </Container>
       </Router>
     </div>
