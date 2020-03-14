@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, FormikProps } from 'formik';
 import { Input, InputProps, Form, Label, Segment, Button } from 'semantic-ui-react';
 import { Gender } from '../types';
 
@@ -15,7 +15,7 @@ type SelectFieldProps = {
   label: string;
   options: GenderOption[];
   defaultValue?: Gender;
-}
+};
 
 export const SelectField: React.FC<SelectFieldProps> = ({
   name,
@@ -55,35 +55,39 @@ export const TextField: React.FC<InputProps & {
 /*
   for exercises 9.24.-
 */
-export const ArrayField: React.FC<InputProps & {
+export const ArrayField: React.FC<{
   label: string;
-  errorMessage?: boolean | string;
-}> = ({ diagnosisCodes, label, placeholder, errorMessage }) => { 
-  const [code, setCode] = React.useState('M24.2')
+  placeholder: string;
+  selectedValues: string[];
+  /** you can use FormikProps<FormValues>['setFieldValue']; when FormValues contains diagnosisCodes */
+  setFieldValue: FormikProps<{ diagnosisCodes: string[] }>['setFieldValue'];
+  errorMessage?: string;
+}> = ({ selectedValues, label, placeholder, setFieldValue, errorMessage }) => {
+  const [code, setCode] = React.useState('M24.2');
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setCode(event.target.value)
+    setCode(event.target.value);
 
   const onClick = () => {
-    if (code.length>0) {
-      diagnosisCodes.push(code)
-      setCode('')
+    if (code.length > 0) {
+      setFieldValue('diagnosisCodes', [...selectedValues, code]);
+      setCode('');
     }
-  }
-  
-  return(
+  };
+
+  return (
     <Form.Field>
       <label>{label}</label>
-      {diagnosisCodes.length>0&&
-        <Segment>
-          <em>{diagnosisCodes.join(', ')}</em>
-        </Segment>
-      }
+      <Segment>
+        <em>
+          {selectedValues.length > 0 ? selectedValues.join(', ') : 'None'}
+        </em>
+      </Segment>
       <Input value={code} onChange={onChange} placeholder={placeholder} />
       <Button type="button" onClick={onClick}>
         add
       </Button>
       {errorMessage && <Label color="red">{errorMessage}</Label>}
     </Form.Field>
-  )
+  );
 };
