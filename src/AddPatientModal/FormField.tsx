@@ -21,19 +21,16 @@ type SelectFieldProps = {
   name: string;
   label: string;
   options: GenderOption[];
-  defaultValue?: Gender;
 };
 
 export const SelectField: React.FC<SelectFieldProps> = ({
   name,
   label,
-  options,
-  defaultValue
+  options
 }: SelectFieldProps) => (
   <Form.Field>
     <label>{label}</label>
     <Field as="select" name={name} className="ui dropdown">
-      {!defaultValue && <option value={defaultValue}>{defaultValue}</option>}
       {options.map(option => (
         <option key={option.value} value={option.value}>
           {option.label || option.value}
