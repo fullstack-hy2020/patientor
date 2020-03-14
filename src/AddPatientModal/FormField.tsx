@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, FieldProps } from "formik";
+import { Field, FieldProps, FormikProps } from "formik";
 import {
   Input,
   InputProps,
@@ -67,18 +67,18 @@ export const ArrayField: React.FC<{
   placeholder: string;
   selectedValues: string[];
   /** you can use FormikProps<FormValues>['setFieldValue']; when FormValues contains diagnosisCodes */
-  setFieldValue: FormikProps<{ diagnosisCodes: string[] }>['setFieldValue'];
+  setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   errorMessage?: string;
 }> = ({ selectedValues, label, placeholder, setFieldValue, errorMessage }) => {
-  const [code, setCode] = React.useState('');
+  const [code, setCode] = React.useState("");
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setCode(event.target.value);
 
   const onClick = () => {
     if (code.length > 0) {
-      setFieldValue('diagnosisCodes', [...selectedValues, code]);
-      setCode('');
+      setFieldValue("diagnosisCodes", [...selectedValues, code]);
+      setCode("");
     }
   };
 
@@ -87,7 +87,7 @@ export const ArrayField: React.FC<{
       <label>{label}</label>
       <Segment>
         <em>
-          {selectedValues.length > 0 ? selectedValues.join(', ') : 'None'}
+          {selectedValues.length > 0 ? selectedValues.join(", ") : "None"}
         </em>
       </Segment>
       <Input value={code} onChange={onChange} placeholder={placeholder} />
