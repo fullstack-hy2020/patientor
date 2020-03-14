@@ -1,7 +1,14 @@
-import React from 'react';
-import { Field, FieldProps, FormikProps } from 'formik';
-import { Input, InputProps, Form, Label, Segment, Button } from 'semantic-ui-react';
-import { Gender } from '../types';
+import React from "react";
+import { Field, FieldProps } from "formik";
+import {
+  Input,
+  InputProps,
+  Form,
+  Label,
+  Segment,
+  Button
+} from "semantic-ui-react";
+import { Gender } from "../types";
 
 // structure of a single option
 export type GenderOption = {
@@ -21,7 +28,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   name,
   label,
   options,
-  defaultValue,
+  defaultValue
 }: SelectFieldProps) => (
   <Form.Field>
     <label>{label}</label>
@@ -38,7 +45,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
 
 const TextInput: React.FC<FieldProps & InputProps> = ({
   placeholder,
-  field,
+  field
 }) => <Input placeholder={placeholder} {...field} />;
 
 export const TextField: React.FC<InputProps & {
@@ -63,7 +70,7 @@ export const ArrayField: React.FC<{
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>['setFieldValue'];
   errorMessage?: string;
 }> = ({ selectedValues, label, placeholder, setFieldValue, errorMessage }) => {
-  const [code, setCode] = React.useState('M24.2');
+  const [code, setCode] = React.useState('');
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setCode(event.target.value);
