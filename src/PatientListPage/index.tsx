@@ -22,20 +22,6 @@ const PatientListPage: React.FC = () => {
     setError(undefined);
   };
 
-  React.useEffect(() => {
-    const fetchPatientList = async () => {
-      try {
-        const { data: patientListFromApi } = await axios.get<Patient[]>(
-          `${apiBaseUrl}/patients`
-        );
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fetchPatientList();
-  }, [dispatch]);
-
   const submitNewPatient = async (values: FormValues) => {
     try {
       const { data: newPatient } = await axios.post<Patient>(
