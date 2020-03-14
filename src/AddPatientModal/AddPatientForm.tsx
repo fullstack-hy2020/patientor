@@ -57,7 +57,7 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
          * also require field to have been touched,
          * so that no all fields won't display errors by default.
          * If no error, return undefined (return type is inferred)
-         */ 
+         */
         const getFieldErrorMessage = (fieldName: keyof FormValues) =>
           touched[fieldName] && errors[fieldName]
             ? errors[fieldName]
@@ -88,12 +88,7 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               placeholder="Occupation"
               errorMessage={getFieldErrorMessage("occupation")}
             />
-            <SelectField
-              label="Gender"
-              name="gender"
-              defaultValue={Gender.Other}
-              options={genderOptions}
-            />
+            <SelectField label="Gender" name="gender" options={genderOptions} />
             <Grid>
               <Grid.Column floated="left" width={5}>
                 <Button type="button" onClick={onCancel} color="red">
