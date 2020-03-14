@@ -1,7 +1,14 @@
-import React from 'react';
-import { Field, FieldProps } from 'formik';
-import { Input, InputProps, Form, Label, Segment, Button } from 'semantic-ui-react';
-import { Gender } from '../types';
+import React from "react";
+import { Field, FieldProps } from "formik";
+import {
+  Input,
+  InputProps,
+  Form,
+  Label,
+  Segment,
+  Button
+} from "semantic-ui-react";
+import { Gender } from "../types";
 
 // structure of a single option
 export type GenderOption = {
@@ -15,13 +22,13 @@ type SelectFieldProps = {
   label: string;
   options: GenderOption[];
   defaultValue?: Gender;
-}
+};
 
 export const SelectField: React.FC<SelectFieldProps> = ({
   name,
   label,
   options,
-  defaultValue,
+  defaultValue
 }: SelectFieldProps) => (
   <Form.Field>
     <label>{label}</label>
@@ -38,7 +45,7 @@ export const SelectField: React.FC<SelectFieldProps> = ({
 
 const TextInput: React.FC<FieldProps & InputProps> = ({
   placeholder,
-  field,
+  field
 }) => <Input placeholder={placeholder} {...field} />;
 
 export const TextField: React.FC<InputProps & {
@@ -58,32 +65,32 @@ export const TextField: React.FC<InputProps & {
 export const ArrayField: React.FC<InputProps & {
   label: string;
   errorMessage?: boolean | string;
-}> = ({ diagnosisCodes, label, placeholder, errorMessage }) => { 
-  const [code, setCode] = React.useState('M24.2')
+}> = ({ diagnosisCodes, label, placeholder, errorMessage }) => {
+  const [code, setCode] = React.useState("M24.2");
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setCode(event.target.value)
+    setCode(event.target.value);
 
   const onClick = () => {
-    if (code.length>0) {
-      diagnosisCodes.push(code)
-      setCode('')
+    if (code.length > 0) {
+      diagnosisCodes.push(code);
+      setCode("");
     }
-  }
-  
-  return(
+  };
+
+  return (
     <Form.Field>
       <label>{label}</label>
-      {diagnosisCodes.length>0&&
+      {diagnosisCodes.length > 0 && (
         <Segment>
-          <em>{diagnosisCodes.join(', ')}</em>
+          <em>{diagnosisCodes.join(", ")}</em>
         </Segment>
-      }
+      )}
       <Input value={code} onChange={onChange} placeholder={placeholder} />
       <Button type="button" onClick={onClick}>
         add
       </Button>
       {errorMessage && <Label color="red">{errorMessage}</Label>}
     </Form.Field>
-  )
+  );
 };
