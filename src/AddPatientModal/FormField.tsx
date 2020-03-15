@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
-import { Input, Form, Label, Segment, Button } from "semantic-ui-react";
-import { Gender } from "../types";
+import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
+import { Diagnosis, Gender } from "../types";
 
 // structure of a single option
 export type GenderOption = {
@@ -38,7 +38,11 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField: React.FC<TextProps> = ({ field, label, placeholder }) => (
+export const TextField: React.FC<TextProps> = ({
+  field,
+  label,
+  placeholder
+}) => (
   <Form.Field>
     <label>{label}</label>
     <Field placeholder={placeholder} {...field} />
@@ -49,39 +53,42 @@ export const TextField: React.FC<TextProps> = ({ field, label, placeholder }) =>
 /*
   for exercises 9.24.-
 */
-export const ArrayField: React.FC<{
-  label: string;
-  placeholder: string;
-  selectedValues: string[];
-  /** you can use FormikProps<PatientFormValues>['setFieldValue']; when PatientFormValues contains diagnosisCodes */
+export const DiagnosisSelection = ({
+  diagnoses,
+  setFieldValue,
+  setFieldTouched
+}: {
+  diagnoses: Diagnosis[];
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
-  errorMessage?: string;
-}> = ({ selectedValues, label, placeholder, setFieldValue, errorMessage }) => {
-  const [code, setCode] = React.useState("");
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setCode(event.target.value);
-
-  const onClick = () => {
-    if (code.length > 0) {
-      setFieldValue("diagnosisCodes", [...selectedValues, code]);
-      setCode("");
-    }
+  setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
+}) => {
+  const field = "diagnosisCodes";
+  const onChange = (
+    _event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
+  ) => {
+    setFieldTouched(field, true);
+    setFieldValue(field, data.value);
   };
+
+  const stateOptions = diagnoses.map(diagnosis => ({
+    key: diagnosis.code,
+    text: `${diagnosis.name} (${diagnosis.code})`,
+    value: diagnosis.code
+  }));
 
   return (
     <Form.Field>
-      <label>{label}</label>
-      <Segment>
-        <em>
-          {selectedValues.length > 0 ? selectedValues.join(", ") : "None"}
-        </em>
-      </Segment>
-      <Input value={code} onChange={onChange} placeholder={placeholder} />
-      <Button type="button" onClick={onClick}>
-        add
-      </Button>
-      {errorMessage && <Label color="red">{errorMessage}</Label>}
+      <label>Diagnoses</label>
+      <Dropdown
+        fluid
+        multiple
+        search
+        selection
+        options={stateOptions}
+        onChange={onChange}
+      />
+      <ErrorMessage name={field} />
     </Form.Field>
   );
 };
