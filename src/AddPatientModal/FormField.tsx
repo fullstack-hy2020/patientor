@@ -33,12 +33,12 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   </Form.Field>
 );
 
-interface Props extends FieldProps {
+interface TextProps extends FieldProps {
   label: string;
   placeholder: string;
 }
 
-export const TextField: React.FC<Props> = ({ field, label, placeholder }) => (
+export const TextField: React.FC<TextProps> = ({ field, label, placeholder }) => (
   <Form.Field>
     <label htmlFor={field.name}>
       <label>{label}</label>
