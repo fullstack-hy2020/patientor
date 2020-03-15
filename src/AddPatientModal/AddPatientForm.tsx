@@ -78,7 +78,11 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               name="occupation"
               component={TextField}
             />
-            <SelectField label="Gender" name="gender" options={genderOptions} />
+            <SelectField
+              label="Gender"
+              name="gender"
+              options={genderOptions}
+            />
             <Grid>
               <Grid.Column floated="left" width={5}>
                 <Button type="button" onClick={onCancel} color="red">
