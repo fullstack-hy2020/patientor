@@ -55,6 +55,24 @@ export const TextField: React.FC<TextProps> = ({
 /*
   for exercises 9.24.-
 */
+interface NumberProps extends FieldProps {
+  label: string;
+  errorMessage?: string;
+  min: number;
+  max: number;
+}
+
+export const NumberField: React.FC<NumberProps> = ({ field, label, min, max }) => (
+  <Form.Field>
+    <label>{label}</label>
+    <Field {...field} type='number' min={min} max={max} />
+
+    <div style={{ color:'red' }}>
+      <ErrorMessage name={field.name} />
+    </div>
+  </Form.Field>
+);
+
 export const DiagnosisSelection = ({
   diagnoses,
   setFieldValue,
