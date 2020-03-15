@@ -1,13 +1,6 @@
 import React from "react";
-import { Field, FieldProps, FormikProps } from "formik";
-import {
-  Input,
-  InputProps,
-  Form,
-  Label,
-  Segment,
-  Button
-} from "semantic-ui-react";
+import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
+import { Input, Form, Label, Segment, Button } from "semantic-ui-react";
 import { Gender } from "../types";
 
 // structure of a single option
@@ -40,19 +33,18 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   </Form.Field>
 );
 
-const TextInput: React.FC<FieldProps & InputProps> = ({
-  placeholder,
-  field
-}) => <Input placeholder={placeholder} {...field} />;
-
-export const TextField: React.FC<InputProps & {
+interface Props extends FieldProps {
   label: string;
-  errorMessage?: string;
-}> = ({ name, label, placeholder, errorMessage }) => (
+  placeholder: string;
+}
+
+export const TextField: React.FC<Props> = ({ field, label, placeholder }) => (
   <Form.Field>
-    <label>{label}</label>
-    <Field name={name} placeholder={placeholder} component={TextInput} />
-    {errorMessage && <Label color="red">{errorMessage}</Label>}
+    <label htmlFor={field.name}>
+      <label>{label}</label>
+      <Field placeholder={placeholder} {...field} />
+      <ErrorMessage name={field.name} />
+    </label>
   </Form.Field>
 );
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Button } from "semantic-ui-react";
-import { Formik, Form } from "formik";
+import { Field, Formik, Form } from "formik";
 
 import { TextField, SelectField, GenderOption } from "./FormField";
 import { Gender, Patient } from "../types";
@@ -51,42 +51,32 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         return errors;
       }}
     >
-      {({ errors, touched }) => {
-        /**
-         * Check if the given field contains an error and return it in that case.
-         * also require field to have been touched,
-         * so that no all fields won't display errors by default.
-         * If no error, return undefined (return type is inferred)
-         */
-        const getFieldErrorMessage = (fieldName: keyof FormValues) =>
-          touched[fieldName] && errors[fieldName]
-            ? errors[fieldName]
-            : undefined;
+      {({ isValid, dirty }) => {
         return (
           <Form className="form ui">
-            <TextField
+            <Field
               label="Name"
-              name="name"
               placeholder="Name"
-              errorMessage={getFieldErrorMessage("name")}
+              name="name"
+              component={TextField}
             />
-            <TextField
+            <Field
               label="Social Security Number"
-              name="ssn"
               placeholder="SSN"
-              errorMessage={getFieldErrorMessage("ssn")}
+              name="ssn"
+              component={TextField}
             />
-            <TextField
+            <Field
               label="Date Of Birth"
-              name="dateOfBirth"
               placeholder="YYYY-MM-DD"
-              errorMessage={getFieldErrorMessage("dateOfBirth")}
+              name="dateOfBirth"
+              component={TextField}
             />
-            <TextField
+            <Field
               label="Occupation"
-              name="occupation"
               placeholder="Occupation"
-              errorMessage={getFieldErrorMessage("occupation")}
+              name="occupation"
+              component={TextField}
             />
             <SelectField label="Gender" name="gender" options={genderOptions} />
             <Grid>
@@ -96,7 +86,12 @@ export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
                 </Button>
               </Grid.Column>
               <Grid.Column floated="right" width={5}>
-                <Button type="submit" floated="right" color="green">
+                <Button
+                  type="submit"
+                  floated="right"
+                  color="green"
+                  disabled={!dirty || !isValid}
+                >
                   Add
                 </Button>
               </Grid.Column>
