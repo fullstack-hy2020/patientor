@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Container, Table, Button } from "semantic-ui-react";
 
-import { FormValues } from "../AddPatientModal/AddPatientForm";
+import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
@@ -22,7 +22,7 @@ const PatientListPage: React.FC = () => {
     setError(undefined);
   };
 
-  const submitNewPatient = async (values: FormValues) => {
+  const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const { data: newPatient } = await axios.post<Patient>(
         `${apiBaseUrl}/patients`,

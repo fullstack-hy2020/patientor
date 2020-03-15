@@ -55,7 +55,7 @@ export const ArrayField: React.FC<{
   label: string;
   placeholder: string;
   selectedValues: string[];
-  /** you can use FormikProps<FormValues>['setFieldValue']; when FormValues contains diagnosisCodes */
+  /** you can use FormikProps<PatientFormValues>['setFieldValue']; when PatientFormValues contains diagnosisCodes */
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   errorMessage?: string;
 }> = ({ selectedValues, label, placeholder, setFieldValue, errorMessage }) => {
