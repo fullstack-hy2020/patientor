@@ -40,11 +40,9 @@ interface TextProps extends FieldProps {
 
 export const TextField: React.FC<TextProps> = ({ field, label, placeholder }) => (
   <Form.Field>
-    <label htmlFor={field.name}>
-      <label>{label}</label>
-      <Field placeholder={placeholder} {...field} />
-      <ErrorMessage name={field.name} />
-    </label>
+    <label>{label}</label>
+    <Field placeholder={placeholder} {...field} />
+    <ErrorMessage name={field.name} />
   </Form.Field>
 );
 
