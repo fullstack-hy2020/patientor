@@ -16,11 +16,11 @@ interface Props {
   onCancel: () => void;
 }
 
-const genderOptions: GenderOption[] = [
-  { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
-  { value: Gender.Other, label: "Other" }
-];
+const upperFirst = (str: string): string => (str.charAt(0).toUpperCase() + str.slice(1)) 
+
+const genderOptions: GenderOption[] = Object.values(Gender).map(genderValue => (
+  {value: genderValue, label: upperFirst(genderValue)}
+));
 
 export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   return (
