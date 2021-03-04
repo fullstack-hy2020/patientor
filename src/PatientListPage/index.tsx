@@ -31,8 +31,8 @@ const PatientListPage: React.FC = () => {
       dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
-      console.error(e.response.data);
-      setError(e.response.data.error);
+      console.error(e.response?.data || 'Unknown Error');
+      setError(e.response?.data?.error || 'Unknown error');
     }
   };
 
