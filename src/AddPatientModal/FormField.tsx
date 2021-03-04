@@ -16,7 +16,7 @@ type SelectFieldProps = {
   options: GenderOption[];
 };
 
-export const SelectField: React.FC<SelectFieldProps> = ({
+export const SelectField = ({
   name,
   label,
   options

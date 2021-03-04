@@ -9,7 +9,7 @@ import { Patient } from "./types";
 
 import PatientListPage from "./PatientListPage";
 
-const App: React.FC = () => {
+const App = () => {
   const [, dispatch] = useStateValue();
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
