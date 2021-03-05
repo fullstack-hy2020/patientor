@@ -38,11 +38,11 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField: React.FC<TextProps> = ({
+export const TextField= ({
   field,
   label,
   placeholder
-}) => (
+}: TextProps) => (
   <Form.Field>
     <label>{label}</label>
     <Field placeholder={placeholder} {...field} />
