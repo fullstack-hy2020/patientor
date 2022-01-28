@@ -5,6 +5,7 @@ import {
   FormControl,
   MenuItem,
   TextField as TextFieldMUI,
+  Typography,
 } from "@material-ui/core";
 import { Diagnosis, Gender } from "../types";
 import { InputLabel } from "@material-ui/core";
@@ -26,6 +27,7 @@ export const SelectField = ({ name, label, options }: SelectFieldProps) => (
   <>
     <InputLabel>{label}</InputLabel>
     <Field
+      fullWidth
       style={{ marginBottom: "0.5em" }}
       label={"test"}
       component={Select}
@@ -46,18 +48,17 @@ interface TextProps extends FieldProps {
 }
 
 export const TextField = ({ field, label, placeholder }: TextProps) => (
-  <>
+  <div style={{ marginBottom: "1em" }}>
     <TextFieldMUI
-      style={{ marginBottom: "1em" }}
       fullWidth
       label={label}
       placeholder={placeholder}
       {...field}
     />
-    <div style={{ color: "red" }}>
+    <Typography variant="subtitle2" style={{ color: "red" }}>
       <ErrorMessage name={field.name} />
-    </div>
-  </>
+    </Typography>
+  </div>
 );
 
 /*
