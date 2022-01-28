@@ -1,15 +1,15 @@
-import React from "react";
-import { Grid, Button } from "@material-ui/core";
-import { Field, Formik, Form } from "formik";
+import React from 'react';
+import { Grid, Button } from '@material-ui/core';
+import { Field, Formik, Form } from 'formik';
 
-import { TextField, SelectField, GenderOption } from "./FormField";
-import { Gender, Patient } from "../types";
+import { TextField, SelectField, GenderOption } from './FormField';
+import { Gender, Patient } from '../types';
 
 /*
  * use type Patient, but omit id and entries,
  * because those are irrelevant for new patient object.
  */
-export type PatientFormValues = Omit<Patient, "id" | "entries">;
+export type PatientFormValues = Omit<Patient, 'id' | 'entries'>;
 
 interface Props {
   onSubmit: (values: PatientFormValues) => void;
@@ -17,24 +17,24 @@ interface Props {
 }
 
 const genderOptions: GenderOption[] = [
-  { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
-  { value: Gender.Other, label: "Other" }
+  { value: Gender.Male, label: 'Male' },
+  { value: Gender.Female, label: 'Female' },
+  { value: Gender.Other, label: 'Other' },
 ];
 
-export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
+export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
   return (
     <Formik
       initialValues={{
-        name: "",
-        ssn: "",
-        dateOfBirth: "",
-        occupation: "",
-        gender: Gender.Other
+        name: '',
+        ssn: '',
+        dateOfBirth: '',
+        occupation: '',
+        gender: Gender.Other,
       }}
       onSubmit={onSubmit}
-      validate={values => {
-        const requiredError = "Field is required";
+      validate={(values) => {
+        const requiredError = 'Field is required';
         const errors: { [field: string]: string } = {};
         if (!values.name) {
           errors.name = requiredError;
@@ -78,20 +78,22 @@ export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
               name="occupation"
               component={TextField}
             />
-            <SelectField
-              label="Gender"
-              name="gender"
-              options={genderOptions}
-            />
+            <SelectField label="Gender" name="gender" options={genderOptions} />
             <Grid>
               <Grid item>
-                <Button color="secondary" variant="contained" style={{float: 'left'}} type="button" onClick={onCancel}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{ float: 'left' }}
+                  type="button"
+                  onClick={onCancel}
+                >
                   Cancel
                 </Button>
               </Grid>
               <Grid item>
                 <Button
-                  style={{float: 'right'}}
+                  style={{ float: 'right' }}
                   type="submit"
                   color="primary"
                   disabled={!dirty || !isValid}

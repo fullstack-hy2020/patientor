@@ -1,6 +1,11 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
-import { Select, FormControl, MenuItem, TextField as TextFieldMUI } from "@material-ui/core";
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  TextField as TextFieldMUI,
+} from "@material-ui/core";
 import { Diagnosis, Gender } from "../types";
 import { InputLabel } from "@material-ui/core";
 
@@ -17,20 +22,21 @@ type SelectFieldProps = {
   options: GenderOption[];
 };
 
-export const SelectField = ({
-  name,
-  label,
-  options
-}: SelectFieldProps) => (
+export const SelectField = ({ name, label, options }: SelectFieldProps) => (
   <>
     <InputLabel>{label}</InputLabel>
-      <Field style={{marginBottom: "0.5em"}} label={'test'} component={Select} name={name}>
-        {options.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label || option.value}
-          </MenuItem>
-        ))}
-      </Field>
+    <Field
+      style={{ marginBottom: "0.5em" }}
+      label={"test"}
+      component={Select}
+      name={name}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label || option.value}
+        </MenuItem>
+      ))}
+    </Field>
   </>
 );
 
@@ -39,14 +45,16 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField= ({
-  field,
-  label,
-  placeholder
-}: TextProps) => (
+export const TextField = ({ field, label, placeholder }: TextProps) => (
   <>
-    <TextFieldMUI style={{marginBottom: "1em"}} fullWidth label={label} placeholder={placeholder} {...field} />
-    <div style={{ color:'red' }}>
+    <TextFieldMUI
+      style={{ marginBottom: "1em" }}
+      fullWidth
+      label={label}
+      placeholder={placeholder}
+      {...field}
+    />
+    <div style={{ color: "red" }}>
       <ErrorMessage name={field.name} />
     </div>
   </>
@@ -62,12 +70,12 @@ interface NumberProps extends FieldProps {
   max: number;
 }
 
-export const NumberField = ({ field, label, min, max } : NumberProps ) => (
+export const NumberField = ({ field, label, min, max }: NumberProps) => (
   <FormControl>
     <label>{label}</label>
-    <Field {...field} type='number' min={min} max={max} />
+    <Field {...field} type="number" min={min} max={max} />
 
-    <div style={{ color:'red' }}>
+    <div style={{ color: "red" }}>
       <ErrorMessage name={field.name} />
     </div>
   </FormControl>
@@ -76,34 +84,33 @@ export const NumberField = ({ field, label, min, max } : NumberProps ) => (
 export const DiagnosisSelection = ({
   diagnoses,
   setFieldValue,
-  setFieldTouched
+  setFieldTouched,
 }: {
   diagnoses: Diagnosis[];
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
 }) => {
   const field = "diagnosisCodes";
-  const onChange = (
-   data: string,
-  ) => {
+  const onChange = (data: string) => {
     setFieldTouched(field, true);
     setFieldValue(field, data);
   };
 
-  const stateOptions = diagnoses.map(diagnosis => ({
+  const stateOptions = diagnoses.map((diagnosis) => ({
     key: diagnosis.code,
     text: `${diagnosis.name} (${diagnosis.code})`,
-    value: diagnosis.code
+    value: diagnosis.code,
   }));
 
   return (
     <FormControl>
-      <label>Diagnoses</label>
-      <Select
-        multiple
-        onChange={(e) => onChange(e.target.value as string)}
-      >
-        {stateOptions.map(option => <MenuItem key={option.key} value={option.value}>{option.text}</MenuItem>)}
+      <InputLabel>Diagnoses</InputLabel>
+      <Select multiple onChange={(e) => onChange(e.target.value as string)}>
+        {stateOptions.map((option) => (
+          <MenuItem key={option.key} value={option.value}>
+            {option.text}
+          </MenuItem>
+        ))}
       </Select>
       <ErrorMessage name={field} />
     </FormControl>

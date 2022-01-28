@@ -34,17 +34,19 @@ const PatientListPage = () => {
       dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
-      console.error(e.response?.data || 'Unknown Error');
-      setError(e.response?.data?.error || 'Unknown error');
+      console.error(e.response?.data || "Unknown Error");
+      setError(e.response?.data?.error || "Unknown error");
     }
   };
 
   return (
     <div className="App">
       <Box>
-        <Typography align="center" variant="h6">Patient list</Typography>
+        <Typography align="center" variant="h6">
+          Patient list
+        </Typography>
       </Box>
-      <Table style={{marginBottom: '1em'}}>
+      <Table style={{ marginBottom: "1em" }}>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -72,7 +74,9 @@ const PatientListPage = () => {
         error={error}
         onClose={closeModal}
       />
-      <Button variant="contained" onClick={() => openModal()}>Add New Patient</Button>
+      <Button variant="contained" onClick={() => openModal()}>
+        Add New Patient
+      </Button>
     </div>
   );
 };
