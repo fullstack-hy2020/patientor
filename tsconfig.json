@@ -19,7 +19,8 @@
     "jsx": "react-jsx",
     "downlevelIteration": true,
     "allowJs": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": false
   },
   "include": [
     "src"
