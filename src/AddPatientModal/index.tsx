@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Segment } from 'semantic-ui-react';
+import { Dialog, DialogTitle, DialogContent, Divider } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import AddPatientForm, { PatientFormValues } from './AddPatientForm';
 
 interface Props {
@@ -10,13 +11,16 @@ interface Props {
 }
 
 const AddPatientModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (
-  <Modal open={modalOpen} onClose={onClose} centered={false} closeIcon>
-    <Modal.Header>Add a new patient</Modal.Header>
-    <Modal.Content>
-      {error && <Segment inverted color="red">{`Error: ${error}`}</Segment>}
+  <Dialog fullWidth={true} open={modalOpen} onClose={() => onClose()}>
+    <DialogTitle>
+      Add a new patient
+    </DialogTitle>
+    <Divider />
+    <DialogContent>
+      {error && <Alert severity="error">{`Error: ${error}`}</Alert>}
       <AddPatientForm onSubmit={onSubmit} onCancel={onClose} />
-    </Modal.Content>
-  </Modal>
+    </DialogContent>
+  </Dialog>
 );
 
 export default AddPatientModal;

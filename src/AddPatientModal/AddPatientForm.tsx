@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button } from "semantic-ui-react";
+import { Grid, Button } from "@material-ui/core";
 import { Field, Formik, Form } from "formik";
 
 import { TextField, SelectField, GenderOption } from "./FormField";
@@ -84,21 +84,21 @@ export const AddPatientForm = ({ onSubmit, onCancel } : Props ) => {
               options={genderOptions}
             />
             <Grid>
-              <Grid.Column floated="left" width={5}>
-                <Button type="button" onClick={onCancel} color="red">
+              <Grid item>
+                <Button color="secondary" variant="contained" style={{float: 'left'}} type="button" onClick={onCancel}>
                   Cancel
                 </Button>
-              </Grid.Column>
-              <Grid.Column floated="right" width={5}>
+              </Grid>
+              <Grid item>
                 <Button
+                  style={{float: 'right'}}
                   type="submit"
-                  floated="right"
-                  color="green"
+                  color="primary"
                   disabled={!dirty || !isValid}
                 >
                   Add
                 </Button>
-              </Grid.Column>
+              </Grid>
             </Grid>
           </Form>
         );

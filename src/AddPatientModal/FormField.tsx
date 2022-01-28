@@ -1,7 +1,8 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
-import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
+import { Select, FormControl, MenuItem, TextField as TextFieldMUI } from "@material-ui/core";
 import { Diagnosis, Gender } from "../types";
+import { InputLabel } from "@material-ui/core";
 
 // structure of a single option
 export type GenderOption = {
@@ -21,16 +22,16 @@ export const SelectField = ({
   label,
   options
 }: SelectFieldProps) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field as="select" name={name} className="ui dropdown">
-      {options.map(option => (
-        <option key={option.value} value={option.value}>
-          {option.label || option.value}
-        </option>
-      ))}
-    </Field>
-  </Form.Field>
+  <>
+    <InputLabel>{label}</InputLabel>
+      <Field style={{marginBottom: "0.5em"}} label={'test'} component={Select} name={name}>
+        {options.map(option => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label || option.value}
+          </MenuItem>
+        ))}
+      </Field>
+  </>
 );
 
 interface TextProps extends FieldProps {
@@ -43,13 +44,12 @@ export const TextField= ({
   label,
   placeholder
 }: TextProps) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field placeholder={placeholder} {...field} />
+  <>
+    <TextFieldMUI style={{marginBottom: "1em"}} fullWidth label={label} placeholder={placeholder} {...field} />
     <div style={{ color:'red' }}>
       <ErrorMessage name={field.name} />
     </div>
-  </Form.Field>
+  </>
 );
 
 /*
@@ -63,14 +63,14 @@ interface NumberProps extends FieldProps {
 }
 
 export const NumberField = ({ field, label, min, max } : NumberProps ) => (
-  <Form.Field>
+  <FormControl>
     <label>{label}</label>
     <Field {...field} type='number' min={min} max={max} />
 
     <div style={{ color:'red' }}>
       <ErrorMessage name={field.name} />
     </div>
-  </Form.Field>
+  </FormControl>
 );
 
 export const DiagnosisSelection = ({
@@ -84,11 +84,10 @@ export const DiagnosisSelection = ({
 }) => {
   const field = "diagnosisCodes";
   const onChange = (
-    _event: React.SyntheticEvent<HTMLElement, Event>,
-    data: DropdownProps
+   data: string,
   ) => {
     setFieldTouched(field, true);
-    setFieldValue(field, data.value);
+    setFieldValue(field, data);
   };
 
   const stateOptions = diagnoses.map(diagnosis => ({
@@ -98,17 +97,15 @@ export const DiagnosisSelection = ({
   }));
 
   return (
-    <Form.Field>
+    <FormControl>
       <label>Diagnoses</label>
-      <Dropdown
-        fluid
+      <Select
         multiple
-        search
-        selection
-        options={stateOptions}
-        onChange={onChange}
-      />
+        onChange={(e) => onChange(e.target.value as string)}
+      >
+        {stateOptions.map(option => <MenuItem key={option.key} value={option.value}>{option.text}</MenuItem>)}
+      </Select>
       <ErrorMessage name={field} />
-    </Form.Field>
+    </FormControl>
   );
 };
