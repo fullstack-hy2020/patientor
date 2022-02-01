@@ -23,14 +23,16 @@ type SelectFieldProps = {
   options: GenderOption[];
 };
 
+const FormikSelect = ({ field, ...props }: FieldProps) => <Select {...field} {...props} />;
+
 export const SelectField = ({ name, label, options }: SelectFieldProps) => (
   <>
     <InputLabel>{label}</InputLabel>
     <Field
       fullWidth
       style={{ marginBottom: "0.5em" }}
-      label={"test"}
-      component={Select}
+      label={label}
+      component={FormikSelect}
       name={name}
     >
       {options.map((option) => (
