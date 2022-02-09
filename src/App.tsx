@@ -1,13 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { Button, Divider, Header, Container } from "semantic-ui-react";
+import { Button, Divider, Container } from "@material-ui/core";
 
 import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
 import { Patient } from "./types";
 
 import PatientListPage from "./PatientListPage";
+import { Typography } from "@material-ui/core";
 
 const App = () => {
   const [, dispatch] = useStateValue();
@@ -31,15 +32,15 @@ const App = () => {
     <div className="App">
       <Router>
         <Container>
-          <Header as="h1">Patientor</Header>
-          <Button as={Link} to="/" primary>
+          <Typography variant="h3" style={{ marginBottom: "0.5em" }}>
+            Patientor
+          </Typography>
+          <Button component={Link} to="/" variant="contained" color="primary">
             Home
           </Button>
           <Divider hidden />
           <Routes>
-            <Route path="/">
-              <PatientListPage />
-            </Route>
+            <Route path="/" element={<PatientListPage />} />
           </Routes>
         </Container>
       </Router>

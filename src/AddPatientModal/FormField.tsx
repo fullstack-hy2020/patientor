@@ -1,7 +1,14 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
-import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  TextField as TextFieldMUI,
+  Typography,
+} from "@material-ui/core";
 import { Diagnosis, Gender } from "../types";
+import { InputLabel } from "@material-ui/core";
 
 // structure of a single option
 export type GenderOption = {
@@ -16,21 +23,25 @@ type SelectFieldProps = {
   options: GenderOption[];
 };
 
-export const SelectField = ({
-  name,
-  label,
-  options
-}: SelectFieldProps) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field as="select" name={name} className="ui dropdown">
-      {options.map(option => (
-        <option key={option.value} value={option.value}>
+const FormikSelect = ({ field, ...props }: FieldProps) => <Select {...field} {...props} />;
+
+export const SelectField = ({ name, label, options }: SelectFieldProps) => (
+  <>
+    <InputLabel>{label}</InputLabel>
+    <Field
+      fullWidth
+      style={{ marginBottom: "0.5em" }}
+      label={label}
+      component={FormikSelect}
+      name={name}
+    >
+      {options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
           {option.label || option.value}
-        </option>
+        </MenuItem>
       ))}
     </Field>
-  </Form.Field>
+  </>
 );
 
 interface TextProps extends FieldProps {
@@ -38,18 +49,18 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField= ({
-  field,
-  label,
-  placeholder
-}: TextProps) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field placeholder={placeholder} {...field} />
-    <div style={{ color:'red' }}>
+export const TextField = ({ field, label, placeholder }: TextProps) => (
+  <div style={{ marginBottom: "1em" }}>
+    <TextFieldMUI
+      fullWidth
+      label={label}
+      placeholder={placeholder}
+      {...field}
+    />
+    <Typography variant="subtitle2" style={{ color: "red" }}>
       <ErrorMessage name={field.name} />
-    </div>
-  </Form.Field>
+    </Typography>
+  </div>
 );
 
 /*
@@ -62,53 +73,49 @@ interface NumberProps extends FieldProps {
   max: number;
 }
 
-export const NumberField = ({ field, label, min, max } : NumberProps ) => (
-  <Form.Field>
+export const NumberField = ({ field, label, min, max }: NumberProps) => (
+  <FormControl>
     <label>{label}</label>
-    <Field {...field} type='number' min={min} max={max} />
+    <Field {...field} type="number" min={min} max={max} />
 
-    <div style={{ color:'red' }}>
+    <div style={{ color: "red" }}>
       <ErrorMessage name={field.name} />
     </div>
-  </Form.Field>
+  </FormControl>
 );
 
 export const DiagnosisSelection = ({
   diagnoses,
   setFieldValue,
-  setFieldTouched
+  setFieldTouched,
 }: {
   diagnoses: Diagnosis[];
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
 }) => {
   const field = "diagnosisCodes";
-  const onChange = (
-    _event: React.SyntheticEvent<HTMLElement, Event>,
-    data: DropdownProps
-  ) => {
+  const onChange = (data: string) => {
     setFieldTouched(field, true);
-    setFieldValue(field, data.value);
+    setFieldValue(field, data);
   };
 
-  const stateOptions = diagnoses.map(diagnosis => ({
+  const stateOptions = diagnoses.map((diagnosis) => ({
     key: diagnosis.code,
     text: `${diagnosis.name} (${diagnosis.code})`,
-    value: diagnosis.code
+    value: diagnosis.code,
   }));
 
   return (
-    <Form.Field>
-      <label>Diagnoses</label>
-      <Dropdown
-        fluid
-        multiple
-        search
-        selection
-        options={stateOptions}
-        onChange={onChange}
-      />
+    <FormControl>
+      <InputLabel>Diagnoses</InputLabel>
+      <Select multiple onChange={(e) => onChange(e.target.value as string)}>
+        {stateOptions.map((option) => (
+          <MenuItem key={option.key} value={option.value}>
+            {option.text}
+          </MenuItem>
+        ))}
+      </Select>
       <ErrorMessage name={field} />
-    </Form.Field>
+    </FormControl>
   );
 };
