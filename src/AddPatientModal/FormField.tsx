@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
 import {
   Select,
@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Diagnosis, Gender } from "../types";
 import { InputLabel } from "@material-ui/core";
+import Input from '@material-ui/core/Input';
 
 // structure of a single option
 export type GenderOption = {
@@ -93,10 +94,12 @@ export const DiagnosisSelection = ({
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
 }) => {
+  const [selectedDiagnoses, setDiagnoses] = useState<string[]>([]);
   const field = "diagnosisCodes";
-  const onChange = (data: string) => {
+  const onChange = (data: string[]) => {    
+    setDiagnoses([...data]);
     setFieldTouched(field, true);
-    setFieldValue(field, data);
+    setFieldValue(field, selectedDiagnoses);
   };
 
   const stateOptions = diagnoses.map((diagnosis) => ({
@@ -106,9 +109,9 @@ export const DiagnosisSelection = ({
   }));
 
   return (
-    <FormControl>
+    <FormControl style={{ width: 552, marginBottom: '30px' }}>
       <InputLabel>Diagnoses</InputLabel>
-      <Select multiple onChange={(e) => onChange(e.target.value as string)}>
+      <Select multiple value={selectedDiagnoses} onChange={(e) => onChange(e.target.value as string[])} input={<Input />}>
         {stateOptions.map((option) => (
           <MenuItem key={option.key} value={option.value}>
             {option.text}
