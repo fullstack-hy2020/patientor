@@ -69,21 +69,36 @@ export const TextField = ({ field, label, placeholder }: TextProps) => (
 */
 interface NumberProps extends FieldProps {
   label: string;
-  errorMessage?: string;
   min: number;
   max: number;
 }
 
-export const NumberField = ({ field, label, min, max }: NumberProps) => (
-  <FormControl>
-    <label>{label}</label>
-    <Field {...field} type="number" min={min} max={max} />
+export const NumberField = ({ field, label, min, max }: NumberProps) => {
+  const [value, setValue] = useState<number>();
 
-    <div style={{ color: "red" }}>
-      <ErrorMessage name={field.name} />
+  return (
+    <div style={{ marginBottom: "1em" }}>
+      <TextFieldMUI
+        fullWidth
+        label={label}
+        placeholder={String(min)}
+        type="number"
+        {...field}
+        value={value}
+        onChange={(e) => {
+          const value = parseInt(e.target.value);
+          if (value === undefined) return;
+          if (value > max) setValue(max);
+          else if (value <= min) setValue(min);
+          else setValue(Math.floor(value));
+      }}
+      />
+      <Typography variant="subtitle2" style={{ color: "red" }}>
+        <ErrorMessage name={field.name} />
+      </Typography>
     </div>
-  </FormControl>
-);
+  );
+};
 
 export const DiagnosisSelection = ({
   diagnoses,
