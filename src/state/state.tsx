@@ -21,7 +21,7 @@ type StateProviderProps = {
   children: React.ReactElement;
 };
 
-export const StateProvider: React.FC<StateProviderProps> = ({
+export const StateProvider = ({
   reducer,
   children
 }: StateProviderProps) => {
