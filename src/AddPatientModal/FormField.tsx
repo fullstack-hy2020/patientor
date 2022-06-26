@@ -73,7 +73,7 @@ interface NumberProps extends FieldProps {
   max: number;
 }
 
-export const NumberField = ({ field, label, min, max }: NumberProps) => {
+export const NumberField = ({ form, field, label, min, max}: NumberProps) => {
   const [value, setValue] = useState<number>();
 
   return (
@@ -86,11 +86,11 @@ export const NumberField = ({ field, label, min, max }: NumberProps) => {
         {...field}
         value={value}
         onChange={(e) => {
-          const value = parseInt(e.target.value);
-          if (value === undefined) return;
-          if (value > max) setValue(max);
-          else if (value <= min) setValue(min);
-          else setValue(Math.floor(value));
+            const inputValue = parseInt(e.target.value);
+            if (isNaN(inputValue))
+              return;
+            setValue(inputValue);
+            form.setFieldValue(field.name, inputValue);
       }}
       />
       <Typography variant="subtitle2" style={{ color: "red" }}>
