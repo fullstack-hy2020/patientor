@@ -86,11 +86,11 @@ export const NumberField = ({ field, label, min, max }: NumberProps) => {
         {...field}
         value={value}
         onChange={(e) => {
-          const value = parseInt(e.target.value);
-          if (value === undefined) return;
-          if (value > max) setValue(max);
-          else if (value <= min) setValue(min);
-          else setValue(Math.floor(value));
+          const inputValue = parseInt(e.target.value);
+          if (inputValue === undefined) return;
+          if (inputValue > max) setValue(max);
+          else if (inputValue <= min) setValue(min);
+          else setValue(Math.floor(inputValue));
       }}
       />
       <Typography variant="subtitle2" style={{ color: "red" }}>
