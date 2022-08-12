@@ -41,7 +41,7 @@ const PatientListPage = () => {
       } else {
         console.error("Unknown error", e);
         setError("Unknown error");
-      }
+      } 
     }
   };
 
