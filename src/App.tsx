@@ -6,12 +6,14 @@ import { Button, Divider, Container } from "@material-ui/core";
 import { apiBaseUrl } from "./constants";
 import { useStateValue } from "./state";
 import { Patient } from "./types";
-
 import PatientListPage from "./PatientListPage";
 import { Typography } from "@material-ui/core";
+// import { useParams } from "react-router-dom";
+import PatientSingleView from "./PatienSingleView";
 
 const App = () => {
   const [, dispatch] = useStateValue();
+  // const { id } = useParams<{ id: string }>();
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
@@ -41,6 +43,7 @@ const App = () => {
           <Divider hidden />
           <Routes>
             <Route path="/" element={<PatientListPage />} />
+            <Route path={`/patients/:id`} element={<PatientSingleView />} />
           </Routes>
         </Container>
       </Router>
