@@ -5,6 +5,7 @@ import { Patient } from "../types";
 import { useStateValue } from "../state";
 import { useParams } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
+import { displayOnePatient } from "../state";
 
 const PatientSingleView = () => {
   const [{ patient }, dispatch] = useStateValue();
@@ -19,7 +20,7 @@ const PatientSingleView = () => {
           const { data: displayPatient } = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
         );
-        dispatch({ type: "DISPLAY_ONE_PATIENT", payload: displayPatient });
+        dispatch(displayOnePatient(displayPatient));
         }
         
       } catch (e) {
@@ -38,6 +39,7 @@ const PatientSingleView = () => {
               <h3>{p.name}</h3>
               <p>occupation: {p.occupation}</p>
               <p>ssn: {p.ssn}</p>
+              <p>gender: {p.gender}</p>
             </div>
           ))
         }
