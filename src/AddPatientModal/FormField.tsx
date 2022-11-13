@@ -9,7 +9,9 @@ import {
 } from "@material-ui/core";
 import { Diagnosis, Gender } from "../types";
 import { InputLabel } from "@material-ui/core";
-import Input from '@material-ui/core/Input';
+import Input from "@material-ui/core/Input";
+import Checkbox from "@material-ui/core/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText";
 
 // structure of a single option
 export type GenderOption = {
@@ -100,6 +102,47 @@ export const NumberField = ({ field, label, min, max }: NumberProps) => {
   );
 };
 
+// export const DiagnosisSelection = ({
+//   diagnoses,
+//   setFieldValue,
+//   setFieldTouched,
+// }: {
+//   diagnoses: Diagnosis[];
+//   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
+//   setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
+// }) => {
+//   const [selectedDiagnoses, setDiagnoses] = useState<string[]>([]);
+//   const field = "diagnosisCodes";
+//   const onChange = (data: string[]) => {    
+//     setDiagnoses([...data]);
+//     setFieldTouched(field, true);
+//     setFieldValue(field, selectedDiagnoses);
+//   };
+
+//   const stateOptions = diagnoses.map((diagnosis) => ({
+//     key: diagnosis.code,
+//     text: `${diagnosis.name} (${diagnosis.code})`,
+//     value: diagnosis.code,
+//   }));
+
+//   return (
+//     <FormControl style={{ width: 552, marginBottom: "30px" }}>
+//       <InputLabel>Diagnoses</InputLabel>
+//       <Select multiple value={selectedDiagnoses} onChange={(e) => onChange(e.target.value as string[])} input={<Input />}>
+//         {stateOptions.map((option) => (
+//           <MenuItem key={option.key} value={option.value}>
+//             {option.text}
+//           </MenuItem>
+//         ))}
+//       </Select>
+//       <ErrorMessage name={field} />
+//     </FormControl>
+//   );
+// };
+
+
+//1. This version fixes the problem with setFieldValues() being behind by 1 bacause of not updated state being passed as an argument. 
+// 2. I felt that it would be better to have checkboxes to choose options :)
 export const DiagnosisSelection = ({
   diagnoses,
   setFieldValue,
@@ -111,10 +154,11 @@ export const DiagnosisSelection = ({
 }) => {
   const [selectedDiagnoses, setDiagnoses] = useState<string[]>([]);
   const field = "diagnosisCodes";
-  const onChange = (data: string[]) => {    
+
+  const onChange = (data: string[]) => {
     setDiagnoses([...data]);
     setFieldTouched(field, true);
-    setFieldValue(field, selectedDiagnoses);
+    setFieldValue(field, [...data]);
   };
 
   const stateOptions = diagnoses.map((diagnosis) => ({
@@ -124,12 +168,29 @@ export const DiagnosisSelection = ({
   }));
 
   return (
-    <FormControl style={{ width: 552, marginBottom: '30px' }}>
+    <FormControl style={{ width: 552, marginBottom: "30px" }}>
       <InputLabel>Diagnoses</InputLabel>
-      <Select multiple value={selectedDiagnoses} onChange={(e) => onChange(e.target.value as string[])} input={<Input />}>
+      <Select
+        multiple
+        value={selectedDiagnoses}
+        onChange={(e) => onChange(e.target.value as string[])}
+        renderValue={(selected) => {
+          if (Array.isArray(selected)) {
+            selected.forEach(a => {
+              if (typeof a !== "string")
+                return ;
+            });
+            return selected.join(", ");
+          }
+        }
+        }
+        input={<Input />}>
+        {/* <Select multiple value={selectedDiagnoses} onChange={handleChange} input={<Input />}> */}
         {stateOptions.map((option) => (
           <MenuItem key={option.key} value={option.value}>
-            {option.text}
+            {/* {option.text} */}
+            <Checkbox checked={selectedDiagnoses.indexOf(option.value) > -1} />
+            <ListItemText primary={option.text} />
           </MenuItem>
         ))}
       </Select>
