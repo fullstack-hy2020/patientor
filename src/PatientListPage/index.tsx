@@ -1,22 +1,24 @@
-import React from "react";
-import axios from "axios";
-import { Box, Table, Button, TableHead, Typography } from "@material-ui/core";
+import { useState } from "react";
+import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from "@material-ui/core";
+import axios from 'axios';
 
-import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
+import { PatientFormValues } from "../types";
 import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
-import { apiBaseUrl } from "../constants";
+
 import HealthRatingBar from "../components/HealthRatingBar";
-import { useStateValue } from "../state";
-import { TableCell } from "@material-ui/core";
-import { TableRow } from "@material-ui/core";
-import { TableBody } from "@material-ui/core";
 
-const PatientListPage = () => {
-  const [{ patients }, dispatch] = useStateValue();
+import patientService from "../services/patients";
 
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<string>();
+interface Props {
+  patients : Patient[]
+  setPatients: React.Dispatch<React.SetStateAction<Patient[]>>
+}
+
+const PatientListPage = ({ patients, setPatients } : Props ) => {
+
+  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [error, setError] = useState<string>();
 
   const openModal = (): void => setModalOpen(true);
 
@@ -27,12 +29,10 @@ const PatientListPage = () => {
 
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
-      const { data: newPatient } = await axios.post<Patient>(
-        `${apiBaseUrl}/patients`,
-        values
-      );
-      dispatch({ type: "ADD_PATIENT", payload: newPatient });
-      closeModal();
+      const patient = await patientService.create(values);
+      console.log(patient);
+      setPatients(patients.concat(patient));
+
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         console.error(e?.response?.data || "Unrecognized axios error");
@@ -42,6 +42,7 @@ const PatientListPage = () => {
         setError("Unknown error");
       }
     }
+
   };
 
   return (

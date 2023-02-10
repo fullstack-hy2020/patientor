@@ -1,7 +1,9 @@
 import React from "react";
 import { Dialog, DialogTitle, DialogContent, Divider } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import AddPatientForm, { PatientFormValues } from "./AddPatientForm";
+
+import AddPatientForm2 from "./AddPatientForm2";
+import { PatientFormValues } from "../types";
 
 interface Props {
   modalOpen: boolean;
@@ -16,7 +18,7 @@ const AddPatientModal = ({ modalOpen, onClose, onSubmit, error }: Props) => (
     <Divider />
     <DialogContent>
       {error && <Alert severity="error">{`Error: ${error}`}</Alert>}
-      <AddPatientForm onSubmit={onSubmit} onCancel={onClose} />
+      <AddPatientForm2 onSubmit={onSubmit} onCancel={onClose} />
     </DialogContent>
   </Dialog>
 );
