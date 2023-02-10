@@ -16,11 +16,9 @@ export type GenderOption = {
   label: string;
 };
 
-const genderOptions: GenderOption[] = [
-  { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
-  { value: Gender.Other, label: "Other" },
-];
+const genderOptions: GenderOption[] = Object.values(Gender).map(v => ({
+  value: v, label: v.toString()
+}));
 
 const AddPatientForm = ({ onCancel, onSubmit, error }: Props) => {
   const [name, setName] = useState('Pekka');
