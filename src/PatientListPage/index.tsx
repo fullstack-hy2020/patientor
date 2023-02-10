@@ -17,7 +17,7 @@ interface Props {
 
 const PatientListPage = ({ patients, setPatients } : Props ) => {
 
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
   const openModal = (): void => setModalOpen(true);
@@ -30,19 +30,22 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const patient = await patientService.create(values);
-      console.log(patient);
       setPatients(patients.concat(patient));
-
+      setModalOpen(false);
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
-        console.error(e?.response?.data || "Unrecognized axios error");
-        setError(String(e?.response?.data?.error) || "Unrecognized axios error");
+        if (e?.response?.data && typeof e?.response?.data === "string") {
+          const message = e.response.data.replace('Something went wrong. Error: ', '');
+          console.error(message);
+          setError(message);
+        } else {
+          setError("Unrecognized axios error");
+        }
       } else {
         console.error("Unknown error", e);
         setError("Unknown error");
       }
     }
-
   };
 
   return (
