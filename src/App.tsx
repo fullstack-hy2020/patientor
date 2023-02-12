@@ -7,7 +7,7 @@ import { apiBaseUrl } from "./constants";
 import { Patient } from "./types";
 
 import patientService from "./services/patients";
-import PatientListPage from "./PatientListPage";
+import PatientListPage from "./components/PatientListPage";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);

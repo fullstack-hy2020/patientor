@@ -2,13 +2,12 @@ import { useState } from "react";
 import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
 import axios from 'axios';
 
-import { PatientFormValues } from "../types";
+import { PatientFormValues, Patient } from "../../types";
 import AddPatientModal from "../AddPatientModal";
-import { Patient } from "../types";
 
-import HealthRatingBar from "../components/HealthRatingBar";
+import HealthRatingBar from "../HealthRatingBar";
 
-import patientService from "../services/patients";
+import patientService from "../../services/patients";
 
 interface Props {
   patients : Patient[]
