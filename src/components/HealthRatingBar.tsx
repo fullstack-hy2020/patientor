@@ -32,6 +32,7 @@ const HealthRatingBar = ({ rating, showText }: BarProps) => {
         value={4 - rating}
         max={4}
         icon={<Favorite fontSize="inherit" />}
+        emptyIcon={<Favorite fontSize="inherit" />}
       />
 
       {showText ? <p>{HEALTHBAR_TEXTS[rating]}</p> : null}
