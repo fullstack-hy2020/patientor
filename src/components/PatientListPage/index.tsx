@@ -1,6 +1,15 @@
 import { useState } from "react";
-import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
-import axios from 'axios';
+import {
+  Box,
+  Table,
+  Button,
+  TableHead,
+  Typography,
+  TableCell,
+  TableRow,
+  TableBody,
+} from "@mui/material";
+import axios from "axios";
 
 import { PatientFormValues, Patient } from "../../types";
 import AddPatientModal from "../AddPatientModal";
@@ -8,14 +17,14 @@ import AddPatientModal from "../AddPatientModal";
 import HealthRatingBar from "../HealthRatingBar";
 
 import patientService from "../../services/patients";
+import { Link } from "react-router-dom";
 
 interface Props {
-  patients : Patient[]
-  setPatients: React.Dispatch<React.SetStateAction<Patient[]>>
+  patients: Patient[];
+  setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
 }
 
-const PatientListPage = ({ patients, setPatients } : Props ) => {
-
+const PatientListPage = ({ patients, setPatients }: Props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
@@ -34,7 +43,10 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         if (e?.response?.data && typeof e?.response?.data === "string") {
-          const message = e.response.data.replace('Something went wrong. Error: ', '');
+          const message = e.response.data.replace(
+            "Something went wrong. Error: ",
+            ""
+          );
           console.error(message);
           setError(message);
         } else {
@@ -66,7 +78,9 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
         <TableBody>
           {Object.values(patients).map((patient: Patient) => (
             <TableRow key={patient.id}>
-              <TableCell>{patient.name}</TableCell>
+              <TableCell>
+                <Link to={`/patients/${patient.id}`}>{patient.name}</Link>
+              </TableCell>
               <TableCell>{patient.gender}</TableCell>
               <TableCell>{patient.occupation}</TableCell>
               <TableCell>
