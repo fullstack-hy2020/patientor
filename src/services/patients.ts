@@ -17,7 +17,7 @@ const create = async (object: PatientFormValues) => {
 
 const getPatient = async () => {
   const { data } = await axios.get<Patient>(`${apiBaseUrl}/patients/:id`);
-
+  console.log("something");
   return data;
 };
 
