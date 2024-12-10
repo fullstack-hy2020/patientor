@@ -19,4 +19,11 @@ export interface Patient {
   dateOfBirth?: string;
 }
 
+
+export interface Entry {
+}
+
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+export interface PatientWEntries extends Patient {
+  entries: Entry[];
+}
