@@ -54,7 +54,7 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
           Patient list
         </Typography>
       </Box>
-      <Table style={{ marginBottom: "1em" }}>
+      <Table sx={{ marginBottom: "1em" }}>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

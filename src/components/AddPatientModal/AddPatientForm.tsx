@@ -76,7 +76,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
           onChange={({ target }) => setOccupation(target.value)}
         />
 
-        <InputLabel style={{ marginTop: 20 }}>Gender</InputLabel>
+        <InputLabel sx={{ marginTop: 2.5 }}>Gender</InputLabel>
         <Select
           label="Gender"
           fullWidth
